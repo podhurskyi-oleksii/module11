@@ -1,23 +1,25 @@
 package Task3;
 
-import java.util.Arrays;
 
-public class SortArr {
-    private static final String[] myStringArray = new String[]{"1, 2, 0", "4, 5"};
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.stream.Stream;
+
+public class SortArr<T> {
+    public String getSortedNumbers(T[] data) {
+        Optional<T[]> data1 = Optional.of(data);
+        Stream<Integer> peek = Stream.of(data1.get())
+                .map(Object::toString)
+                .flatMap((p) -> Arrays.stream(p.split(",")))
+                .map(p -> Integer.parseInt(p.strip()))
+                .sorted();
+        String result = Arrays.toString(peek.toArray());
+        return result.substring(1, result.length() - 1);
+    }
 
     public static void main(String[] args) {
-
-        String[] myStringArrayChar = Arrays.stream(myStringArray)
-                .flatMap((p) -> Arrays.stream(p.split(", ")))
-                .toArray(String[]::new);
-
-        int[] myIntArray = Arrays.stream(myStringArrayChar)
-                .mapToInt(Integer::parseInt)
-                .sorted()
-                .toArray();
-
-        String myString = Arrays.toString(myIntArray).replaceAll("\\[|]|\\s", "");
-
-        System.out.println(myString);
+        String[] data = new String[]{"1, 2, 0", "4, 5"};
+        SortArr<String> test = new SortArr<>();
+        System.out.println(test.getSortedNumbers(data));
     }
 }

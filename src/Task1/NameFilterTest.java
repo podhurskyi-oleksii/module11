@@ -1,35 +1,27 @@
 package Task1;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class NameFilterTest {
-    private static final List<String> listName = Arrays.asList("Bonnie", "Joshua", "Lori", "James", "Carlos", "Cassandra", "Jesse");
+    public String oddNames(String[] data) {
+        Map<Integer, String> dataMap = new HashMap<>();
+        for (int i = 0; i < data.length; i++) {
+            dataMap.put(i, data[i]);
+        }
+
+        StringBuilder result = new StringBuilder();
+        Optional<Map<Integer, String>> dataOptional = Optional.of(dataMap);
+        dataOptional.get().entrySet()
+                .stream()
+                .filter(p -> p.getKey() % 2 != 0)
+                .forEach(name -> result.append(name.getKey()).append(". ").append(name.getValue()).append(", "));
+        return result.substring(0, result.length()-2);
+    }
 
     public static void main(String[] args) {
-        System.out.print("All names: ");
-        nameNumber((n) -> 0 == n, listName);
-        System.out.print("Odd names: ");
-        nameNumberOdd((n) -> n % 2 == 1, listName);
-    }
-
-    public static void nameNumber(NameFilter nameNumber, List<String> names) {
-        List<String> result = new ArrayList<>();
-        for (int i = 0; i < names.size(); i++) {
-            String lastName = listName.get(i);
-            result.add(i + ". " + lastName);
-        }
-        System.out.println(result);
-    }
-
-    public static void nameNumberOdd(NameFilter nameNumber, List<String> names) {
-        List<String> result = new ArrayList<>();
-        for (int i = 0; i < names.size(); i++) {
-            if (!nameNumber.oddName(i)) continue;
-            String lastName = listName.get(i);
-            result.add(i + ". " + lastName);
-        }
+        NameFilterTest test = new NameFilterTest();
+        String[] data = new String[]{"Bonnie", "Joshua", "Lori", "James", "Carlos", "Cassandra", "Jesse"};
+        String result = test.oddNames(data);
         System.out.println(result);
     }
 }

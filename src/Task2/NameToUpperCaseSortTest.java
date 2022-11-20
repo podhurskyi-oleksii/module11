@@ -1,26 +1,24 @@
 package Task2;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.Comparator;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public class NameToUpperCaseSortTest {
-    private static final List<String> listName = Arrays.asList("Bonnie", "Joshua", "Lori", "James", "Carlos", "Cassandra", "Jesse");
+    public String[] reverseSortByUpperCase(String[] data) {
+        Optional<String[]> dats = Optional.of(data);
+        Stream<String> result = Stream.of(dats.get())
+                .sorted(Comparator.reverseOrder())
+                .map(String::toUpperCase);
 
-    public static void main(String[] args) {
-        List<String> nameUp = stringUp(String::toUpperCase);
-
-        nameUp.sort(Collections.reverseOrder());
-
-        System.out.println(nameUp);
+        return result.toArray(String[]::new);
     }
 
-    static List<String> stringUp(NameToUpperCaseSort nameUp) {
-        List<String> result = new ArrayList<>();
-        for (String name : NameToUpperCaseSortTest.listName) {
-            result.add(nameUp.func(name));
-        }
-        return result;
+    public static void main(String[] args) {
+        NameToUpperCaseSortTest test = new NameToUpperCaseSortTest();
+        String[] names = new String[]{"Bonnie", "Joshua", "Lori", "James", "Carlos", "Cassandra", "Jesse"};
+        String[] result = test.reverseSortByUpperCase(names);
+        System.out.println(Arrays.toString(result));
     }
 }
